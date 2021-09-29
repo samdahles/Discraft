@@ -21,8 +21,8 @@ public class Config {
 		}
 	}
 	
-	public Object get(String key) {
-		return config.get(key);
+	public String get(String key) {
+		return config.getString(key);
 	}
 	
 	public boolean getBoolean(String key) {
