@@ -1,12 +1,9 @@
 package dev.samdahles.discraft;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Config {
 	private FileConfiguration config;
@@ -59,6 +56,7 @@ public class Config {
 		config.addDefault("showServerStatusEmbeds", true);
 		config.addDefault("minecraftChannel", "PASTE_YOUR_DISCORD_CHANNEL_HERE");
 		config.addDefault("botToken", "PASTE_YOUR_DISCORD_BOT_TOKEN_HERE");
+		config.addDefault("serverAddress", "PASTE_YOUR_SERVER_ADDRESS_HERE");
 	}
 	
 

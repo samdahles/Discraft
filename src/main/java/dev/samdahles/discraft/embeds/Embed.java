@@ -1,5 +1,6 @@
 package dev.samdahles.discraft.embeds;
 
-public class Embed {
-
+public abstract class Embed {
+	protected int EmbedColor;
+	
 }
