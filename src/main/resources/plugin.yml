@@ -1,0 +1,10 @@
+name: Discraft
+main: dev.samdahles.discraft.Core
+version: 1.0
+api-version: 1.17.1
+author: Sam Dahles
+description: Bukkit plugin enabling Discord-to-Minecraft messaging and vice versa.
+commands:
+  sendcoords:
+    description: Sends your coordinates to the Discord server.
+    usage: /sendcoords
