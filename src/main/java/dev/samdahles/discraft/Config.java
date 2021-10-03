@@ -1,42 +1,58 @@
 package dev.samdahles.discraft;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.net.URISyntaxException;
+import java.util.Map;
 
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.yaml.snakeyaml.Yaml;
 
+@SuppressWarnings("unused")
 public class Config {
-	private FileConfiguration config;
+	private Yaml yaml = new Yaml();
 	private String relativePath;
+	private String absolutePath;
+	private FileWriter yamlFileWriter;
+	private FileInputStream yamlFileInputStream;
+	private Map<String, Object> config;
 	
 	Config(String relativePath) {
-		this.relativePath = relativePath;
+		this.relativePath = relativePath.replace("/", File.separator);
 		try {
-			config.load(relativePath);
-		} catch (IOException | InvalidConfigurationException e) {
-			this.createDefault();
+			this.absolutePath = new File(".").getCanonicalPath() + File.separator + this.relativePath;
+			yamlFileWriter = new FileWriter(this.absolutePath);
+			yamlFileInputStream = new FileInputStream(this.absolutePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		config = yaml.load(yamlFileInputStream);
 	}
-	
+		
 	public String get(String key) {
-		return config.getString(key);
+		return (String) config.get(key);
 	}
 	
 	public boolean getBoolean(String key) {
-		return config.getBoolean(key);
+		return (boolean) config.get(key);
 	}
 	
 	public int getInt(String key) {
-		return config.getInt(key);
+		return (int) config.get(key);
 	}
 	
 	public boolean set(String key, String value) throws IOException {
-		// Sets config entry and refreshes the Config object. Returns true if key exists, false if not
-		if(config.contains(key)) {
-			config.set(key, value);
-			// ? config.options().copyDefaults(true);
-			config.save(this.relativePath);
-			this.refresh();
+		// Sets config entry and refreshes the YAML file. Returns true if key exists, false if not
+		if(config.containsKey(key)) {
+			config.put(key, value);
+			yaml.dump(config, yamlFileWriter);
 			return true;
 		}
 		return false;
@@ -44,21 +60,20 @@ public class Config {
 	
 	public void refresh() {
 		try {
-			config.load(relativePath);
-		} catch (IOException | InvalidConfigurationException e) {
-			this.createDefault();
+			yamlFileInputStream = new FileInputStream(this.absolutePath);
+			yamlFileWriter = new FileWriter(this.absolutePath);
+		} catch (IOException e) {
+			
 		}
+		yaml.load(yamlFileInputStream);
 	}
 	
-	
-	private void createDefault() {
-		config.addDefault("showPresence", true);
-		config.addDefault("showServerStatusEmbeds", true);
-		config.addDefault("minecraftChannel", "PASTE_YOUR_DISCORD_CHANNEL_HERE");
-		config.addDefault("botToken", "PASTE_YOUR_DISCORD_BOT_TOKEN_HERE");
-		config.addDefault("serverAddress", "PASTE_YOUR_SERVER_ADDRESS_HERE");
+	public void createDefault() {
+		config.putIfAbsent("showPresence", true);
+		config.putIfAbsent("showServerStatusEmbeds", true);
+		config.putIfAbsent("minecraftChannel", "PASTE_YOUR_DISCORD_CHANNEL_HERE");
+		config.putIfAbsent("botToken", "PASTE_YOUR_DISCORD_BOT_TOKEN_HERE");
+		config.putIfAbsent("serverAddress", "PASTE_YOUR_SERVER_ADDRESS_HERE");
 	}
-	
-
 	
 }

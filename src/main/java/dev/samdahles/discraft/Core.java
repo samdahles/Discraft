@@ -1,21 +1,31 @@
 package dev.samdahles.discraft;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javax.security.auth.login.LoginException;
 
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 
 @SuppressWarnings("unused")
-public class Core implements Listener {
+public class Core extends JavaPlugin implements Listener {
 	public static Config config;
 	public static JDA jda;
 	
-	public static void main(String[] args) throws LoginException {
-		config = new Config("Discraft/config.yml");
-		JDA jda = JDABuilder.createDefault(config.get("botToken")).build();
+	@Override
+	public void onEnable() {
+		try {
+			config = new Config("Discraft/config.yml");
+			JDA jda = JDABuilder.createDefault(config.get("botToken")).build();
+		} catch (LoginException | URISyntaxException | IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 		
 		Thread updateThread = new Thread(() -> {
 			while(true) {
@@ -23,7 +33,6 @@ public class Core implements Listener {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
