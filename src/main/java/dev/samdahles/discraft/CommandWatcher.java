@@ -26,7 +26,6 @@ public class CommandWatcher implements CommandExecutor {
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String cmd, @NotNull String[] args) {
 		if(sender instanceof Player) {
-			// Non-console commands
 			Player player = (Player) sender;
 			if(cmd.equalsIgnoreCase("sendcoords")) {
 				Location playerLocation = player.getLocation();
@@ -52,16 +51,13 @@ public class CommandWatcher implements CommandExecutor {
 			}
 		}
 		
-		// Console and player commands
 		if(cmd.equalsIgnoreCase("reloadtoken")) {
 			if(sender instanceof Player) {
-				// OP Check
 				if(!((Player) sender).isOp()) {
 					return false;
 				}
 			}
 			Core.buildConfig();
-			// Send all online OPs a message
 			String tosend = ChatColor.WHITE + "Discraft token has been refreshed by " + ChatColor.BLUE + "console";
 			if(sender instanceof Player) {
 				tosend = ChatColor.WHITE + "Discraft token has been refreshed by " + ChatColor.of(Embed.PLAYER((Player) sender) + ((Player) sender).getName());

@@ -1,25 +1,24 @@
 package dev.samdahles.discraft;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-import dev.samdahles.discraft.embeds.*;
+import dev.samdahles.discraft.embeds.Embed;
+import dev.samdahles.discraft.embeds.EventEmbed;
+import dev.samdahles.discraft.embeds.MinecraftChatEmbed;
+import dev.samdahles.discraft.embeds.ServerEmbed;
 import net.md_5.bungee.api.ChatColor;
 
 public class ServerEventHandler implements Listener {
@@ -64,9 +63,7 @@ public class ServerEventHandler implements Listener {
 	}
 	
 	// TODO: Check if pet was killed
-	public void onEntityDamage(EntityDamageEvent event) {
-		
-	}
+	public void onEntityDamage(EntityDamageEvent event) {}
 	
 	
 	@EventHandler
@@ -78,11 +75,15 @@ public class ServerEventHandler implements Listener {
 	}
 	
 	public void onEnable() {
-		new ServerEmbed("Server is online!").send();
+		if(Core.config.getBoolean("showServerStatusEmbeds")) {
+			new ServerEmbed("Server is online!").send();
+		}
 	}
 	
+	// TODO: Disable linkingChannel talking permissions
 	public void onDisable() {
-		new ServerEmbed("Server shutting down!").send();
-		// TODO: Disable linkingChannel talking permissions
+		if(Core.config.getBoolean("showServerStatusEmbeds")) {
+			new ServerEmbed("Server shutting down!").send();
+		}
 	}
 }

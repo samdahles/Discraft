@@ -3,7 +3,6 @@ package dev.samdahles.discraft;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -107,7 +105,6 @@ public class Config {
 	
 	
 	private void map2file() {
-		// Convert Map to YAML and store it
 		try {
 			yaml.dump(this.config, new FileWriter(this.absolutePath));
 		} catch (IOException e) {
@@ -116,7 +113,6 @@ public class Config {
 	}
 	
 	public void file2map() {
-		// Convert the YAML to a map and store it
 		try {
 			this.config = yaml.load(new FileInputStream(this.absolutePath));
 		} catch (FileNotFoundException e) {
@@ -126,8 +122,6 @@ public class Config {
 	
 	
 	private boolean createConfigIfNotExists() throws IOException {
-		// Creates new config file if it didn't exist. 
-		// Returns false if nothing has been created. 
 		if(this.configFile.exists()) {
 			if(this.configFile.isDirectory()) { 
 				throw new IOException(this.configFile.getName() + " is a directory");
@@ -136,10 +130,8 @@ public class Config {
 			}
 		}
 	
-		// Make all necessary folders
 		String pathNameOnly = this.absolutePath.replace(configFile.getName(), "");
 		new File(pathNameOnly).mkdirs();
-		// Set config map to default values		
 		this.fillDefault();
 		return true;
 	}

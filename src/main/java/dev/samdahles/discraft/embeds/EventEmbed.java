@@ -1,9 +1,8 @@
 package dev.samdahles.discraft.embeds;
 
-import java.util.UUID;
 import java.awt.Color;
+import java.util.UUID;
 
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 

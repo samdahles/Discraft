@@ -1,15 +1,13 @@
 package dev.samdahles.discraft.embeds;
 
+import java.awt.Color;
 import java.io.File;
 import java.time.Instant;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import dev.samdahles.discraft.Core;
 import net.dv8tion.jda.api.EmbedBuilder;
-
-import java.awt.Color;
 
 public abstract class Embed {
 	protected EmbedBuilder eb;

@@ -1,12 +1,10 @@
 package dev.samdahles.discraft;
 
+import java.awt.Color;
+
 import org.bukkit.Bukkit;
 
 import dev.samdahles.discraft.embeds.DiscordChatEmbed;
-import dev.samdahles.discraft.Core;
-
-import java.awt.Color;
-
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
@@ -19,21 +17,17 @@ public class DiscordEventHandler extends ListenerAdapter {
 	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
-		// Check if correct channel
 		if(!event.getChannel().equals(Core.linkingChannel) || event.getAuthor().getAsTag() == Core.jda.getSelfUser().getAsTag()) return;
 		
-		// Delete bot message
 		if(event.getAuthor().isBot()) {
 			event.getMessage().delete();
 			return;
 		}
 		
 		Message msg = event.getMessage();
-		// Replace message with embed
 		event.getMessage().delete().queue();;
 		new DiscordChatEmbed(event.getMember(), event).send();
 		
-		// Send it in minecraft
 		User user = event.getAuthor();
 		Member author = event.getGuild().getMember(user);
 		ChatColor usernameColor = ChatColor.of(new Color(author.getColorRaw()));

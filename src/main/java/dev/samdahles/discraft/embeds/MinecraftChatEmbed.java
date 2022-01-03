@@ -1,6 +1,5 @@
 package dev.samdahles.discraft.embeds;
 
-import java.awt.Color;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
