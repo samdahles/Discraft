@@ -9,8 +9,9 @@ This plugin contains features that other plugins don't have:
 - Simple
 
 <p align=center>Scroll down, there's more!</p>
-<img src="https://media.discordapp.net/attachments/804063233014497320/927358476982812702/unknown.png">
-
+<p align=center>
+<img width="80%" src="https://github.com/samdahles/discraft/blob/master/showcase.png">
+</p>
 
 ## How to install
 1. Drop the latest Discraft release into your Spigot plugin folder
